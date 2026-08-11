@@ -34,7 +34,7 @@ header{background:rgba(16,16,16,.96);backdrop-filter:blur(20px);position:sticky;
 .nav-item.active>button{color:var(--lime);border-bottom-color:var(--lime)}
 .nav-item .chev{font-size:9px;transition:transform .15s}
 .nav-item.open .chev{transform:rotate(180deg)}
-.dropdown{display:none;position:absolute;top:100%;left:0;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:8px;min-width:220px;box-shadow:0 12px 32px rgba(0,0,0,.5)}
+.dropdown{display:none;position:fixed;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:8px;min-width:220px;max-height:70vh;overflow-y:auto;box-shadow:0 12px 32px rgba(0,0,0,.5);z-index:300}
 .nav-item.open .dropdown{display:block}
 .dropdown button{display:block;width:100%;text-align:left;background:none;border:none;color:var(--text2);font-size:12.5px;padding:9px 12px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif}
 .dropdown button:hover{background:var(--bg4);color:var(--text)}
@@ -208,7 +208,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
 
       <div class="login-form" id="lf-eq">
         <span class="back-link" onclick="backToRoles()">← Volver</span>
-        <div class="credentials-box"><p>Credenciales de prueba</p><code>rayos@hockeykidsleague.uy</code></div>
+        <div class="credentials-box"><p>Credenciales de prueba</p><code>bolazziagustina@gmail.com</code></div>
         <div class="error-msg" id="err-eq">Email o contraseña incorrectos</div>
         <label class="lf">Email</label>
         <input class="li" id="eq-email" type="email" placeholder="tuequipo@hockeykidsleague.uy">
@@ -219,10 +219,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
 
       <div class="login-form" id="lf-arb">
         <span class="back-link" onclick="backToRoles()">← Volver</span>
-        <div class="credentials-box"><p>Credenciales de prueba</p><code>arbitro01@hockeykidsleague.uy</code></div>
+        <div class="credentials-box"><p>Credenciales de prueba</p><code>belenbolazzi@gmail.com</code></div>
         <div class="error-msg" id="err-arb">Email o contraseña incorrectos</div>
         <label class="lf">Email</label>
-        <input class="li" id="arb-email" type="email" placeholder="arbitro01@hockeykidsleague.uy">
+        <input class="li" id="arb-email" type="email" placeholder="belenbolazzi@gmail.com">
         <label class="lf">Contraseña</label>
         <input class="li" id="arb-pass" type="password" placeholder="••••••••">
         <button class="btn-login-go" id="arb-btn" onclick="loginArbitro()">Ingresar →</button>
@@ -834,12 +834,24 @@ function toggleDrop(id){
   var item=document.getElementById(id);
   var wasOpen=item.classList.contains('open');
   closeAllDrops();
-  if(!wasOpen)item.classList.add('open');
+  if(!wasOpen){
+    item.classList.add('open');
+    var btn=item.querySelector('button');
+    var dd=item.querySelector('.dropdown');
+    var r=btn.getBoundingClientRect();
+    var left=r.left;
+    var maxLeft=window.innerWidth - 236; // dropdown min-width 220 + margin
+    if(left>maxLeft) left=Math.max(8,maxLeft);
+    dd.style.top=(r.bottom+6)+'px';
+    dd.style.left=left+'px';
+  }
 }
 function closeAllDrops(){document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('open'))}
 document.addEventListener('click',function(e){
   if(!e.target.closest('.nav-item'))closeAllDrops();
 });
+window.addEventListener('scroll',closeAllDrops,{passive:true});
+window.addEventListener('resize',closeAllDrops);
 
 function goToPosiciones(torneo,cat){
   goTo('posiciones',null);
@@ -886,8 +898,8 @@ if(location.hash==='#admin'){ setTimeout(function(){ openModal(); showLogin('adm
 <script type="module">
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const supabase = createClient(
-  'https://ykgrrjnvkxpwcvagleqq.supabase.co',
-  'sb_publishable_P5KEpjSfChoGLCttRyDgdg_hqah0iMG'
+  'https://vzrreijqoeazqnifwyhf.supabase.co',
+  'sb_publishable_1f6xxArqTuxaVxBbDKjU7A_P8LzVozc'
 );
 window.supabase = supabase;
 window.CURRENT_USER = null; // {id, rol, nombre, equipo_id}
