@@ -163,8 +163,26 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
 
 @media(max-width:768px){
   .cats3,.gal3,.g2{grid-template-columns:1fr}
-  .container{padding:28px 16px}
-  .hero h1{font-size:38px}
+  .container{padding:24px 16px}
+  .hero{padding:40px 16px;min-height:460px}
+  .hero-logo{width:80px;height:80px}
+  .club-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  .nav-inner{padding:0 12px;gap:8px}
+  .brand-name{display:none}
+  .btn-ingresar{padding:8px 14px;font-size:12px}
+  .nav-item>button{padding:0 10px;font-size:12px}
+  .hero-content p{font-size:13px}
+  .cta-lime{padding:12px 22px;font-size:13px}
+  .sec-title{font-size:20px}
+  .modal-body{padding:16px}
+  .club-grid{grid-template-columns:1fr 1fr}
+  #arb-partido-view > .card > div[style*="gap:30px"]{gap:14px!important}
+  #arb-gol-local,#arb-gol-visita{font-size:26px!important}
+  .tabs2{overflow-x:auto;flex-wrap:nowrap!important}
+  .tabs2 .tab2{white-space:nowrap}
+  .li{font-size:16px}
 }
 </style>
 </head>
@@ -190,28 +208,34 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
 
       <div class="login-form" id="lf-eq">
         <span class="back-link" onclick="backToRoles()">← Volver</span>
-        <div class="credentials-box"><p>Credenciales de prueba — Los Rayos</p><code>Equipo: Los Rayos · Contraseña: somosinclusives</code></div>
-        <div class="error-msg" id="err-eq">Equipo o contraseña incorrectos</div>
-        <label class="lf">Seleccionar equipo</label>
-        <select class="li" id="eq-sel">
-          <option value="">— elegir equipo —</option>
-          <option value="RY">Los Rayos (Sub 8)</option>
-          <option value="PU">Los Pumas (Sub 10)</option>
-        </select>
+        <div class="credentials-box"><p>Credenciales de prueba</p><code>rayos@hockeykidsleague.uy</code></div>
+        <div class="error-msg" id="err-eq">Email o contraseña incorrectos</div>
+        <label class="lf">Email</label>
+        <input class="li" id="eq-email" type="email" placeholder="tuequipo@hockeykidsleague.uy">
         <label class="lf">Contraseña</label>
         <input class="li" id="eq-pass" type="password" placeholder="••••••••">
-        <button class="btn-login-go" onclick="loginEquipo()">Ingresar →</button>
+        <button class="btn-login-go" id="eq-btn" onclick="loginEquipo()">Ingresar →</button>
       </div>
 
       <div class="login-form" id="lf-arb">
         <span class="back-link" onclick="backToRoles()">← Volver</span>
-        <div class="credentials-box"><p>Credenciales de prueba</p><code>Usuario: arbitro01 · Contraseña: hkl2026</code></div>
-        <div class="error-msg" id="err-arb">Usuario o contraseña incorrectos</div>
-        <label class="lf">Usuario</label>
-        <input class="li" id="arb-user" placeholder="arbitro01">
+        <div class="credentials-box"><p>Credenciales de prueba</p><code>arbitro01@hockeykidsleague.uy</code></div>
+        <div class="error-msg" id="err-arb">Email o contraseña incorrectos</div>
+        <label class="lf">Email</label>
+        <input class="li" id="arb-email" type="email" placeholder="arbitro01@hockeykidsleague.uy">
         <label class="lf">Contraseña</label>
         <input class="li" id="arb-pass" type="password" placeholder="••••••••">
-        <button class="btn-login-go" onclick="loginArbitro()">Ingresar →</button>
+        <button class="btn-login-go" id="arb-btn" onclick="loginArbitro()">Ingresar →</button>
+      </div>
+
+      <div class="login-form" id="lf-admin">
+        <span class="back-link" onclick="backToRoles()">← Volver</span>
+        <div class="error-msg" id="err-admin">Email o contraseña incorrectos</div>
+        <label class="lf">Email</label>
+        <input class="li" id="admin-email" type="email" placeholder="admin@hockeykidsleague.uy">
+        <label class="lf">Contraseña</label>
+        <input class="li" id="admin-pass" type="password" placeholder="••••••••">
+        <button class="btn-login-go" id="admin-btn" onclick="loginAdmin()">Ingresar →</button>
       </div>
 
     </div>
@@ -622,6 +646,174 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
   </div>
 </footer>
 
+
+<!-- ==================== PANELES ==================== -->
+<div id="panel-equipo" class="page">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px">
+      <div><div class="sec-lbl" style="margin:0">panel equipo</div><div class="sec-title" id="eq-nombre-header" style="font-size:22px">Cargando…</div></div>
+      <button class="ch" onclick="logout()">Salir</button>
+    </div>
+
+    <div class="sec-lbl">mis jugadores</div>
+    <button class="cta-lime" style="margin-bottom:16px;padding:10px 20px;font-size:12px" onclick="toggleJugadorForm()">+ Agregar jugador</button>
+
+    <div id="jugador-form" class="card" style="display:none;padding:20px;margin-bottom:20px">
+      <div class="g2">
+        <div><label class="lf">Nombre</label><input class="li" id="jf-nombre"></div>
+        <div><label class="lf">Apellido</label><input class="li" id="jf-apellido"></div>
+      </div>
+      <div class="g2">
+        <div><label class="lf">Documento</label><input class="li" id="jf-documento"></div>
+        <div><label class="lf">Fecha de nacimiento</label><input class="li" type="date" id="jf-fnac"></div>
+      </div>
+      <div class="g2">
+        <div><label class="lf">Sociedad médica</label><input class="li" id="jf-sociedad"></div>
+        <div><label class="lf">Teléfono sociedad médica</label><input class="li" id="jf-tel-sociedad"></div>
+      </div>
+      <p style="font-size:11px;color:var(--lime);margin:10px 0 6px;font-weight:700">DATOS DEL TUTOR (obligatorio)</p>
+      <div class="g2">
+        <div><label class="lf">Nombre y apellido del tutor</label><input class="li" id="jf-tutor-nombre"></div>
+        <div><label class="lf">Teléfono del tutor</label><input class="li" id="jf-tutor-tel"></div>
+      </div>
+      <label class="lf">Vínculo con el niño/a</label>
+      <select class="li" id="jf-tutor-vinculo">
+        <option value="">— elegir —</option>
+        <option>Madre</option><option>Padre</option><option>Tutor legal</option><option>Otro familiar</option>
+      </select>
+      <div class="error-msg" id="jf-error">Completá todos los campos obligatorios</div>
+      <button class="btn-login-go" onclick="guardarJugador()">Guardar jugador</button>
+    </div>
+
+    <div class="card"><div class="tabla-wrap">
+      <table><thead><tr><th class="tl">nombre</th><th>doc</th><th>categoría</th><th>tutor</th><th>estado</th></tr></thead>
+      <tbody id="jugadores-tbody"><tr><td colspan="5" style="text-align:center;color:var(--text3);padding:20px">Cargando…</td></tr></tbody></table>
+    </div></div>
+
+    <div class="sec-lbl" style="margin-top:36px">mis próximos partidos</div>
+    <div class="card"><div id="eq-partidos-list" style="padding:16px;color:var(--text3)">Cargando…</div></div>
+  </div>
+</div>
+
+<div id="panel-arbitro" class="page">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px">
+      <div><div class="sec-lbl" style="margin:0">panel árbitro</div><div class="sec-title" id="arb-nombre-header" style="font-size:22px">Cargando…</div></div>
+      <button class="ch" onclick="logout()">Salir</button>
+    </div>
+
+    <div id="arb-lista-view">
+      <div class="sec-lbl">mis partidos asignados</div>
+      <div class="card"><div id="arb-partidos-list" style="padding:16px;color:var(--text3)">Cargando…</div></div>
+    </div>
+
+    <div id="arb-partido-view" style="display:none">
+      <span class="back-link" onclick="volverListaPartidos()">← Volver a mis partidos</span>
+      <div class="card" style="padding:24px;margin-bottom:20px">
+        <div id="arb-partido-header" style="text-align:center;margin-bottom:20px"></div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:30px;margin-bottom:24px">
+          <div style="text-align:center">
+            <div id="arb-nombre-local" style="font-size:13px;color:var(--text2);margin-bottom:8px"></div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <button class="ch" onclick="sumarGol('visita',-1)" style="padding:6px 12px">−</button>
+              <div id="arb-gol-local" style="font-size:32px;font-weight:800;min-width:40px">0</div>
+              <button class="ch" onclick="sumarGol('local',1)" style="padding:6px 12px">+</button>
+            </div>
+          </div>
+          <div style="font-size:20px;color:var(--text3)">—</div>
+          <div style="text-align:center">
+            <div id="arb-nombre-visita" style="font-size:13px;color:var(--text2);margin-bottom:8px"></div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <button class="ch" onclick="sumarGol('visita',1)" style="padding:6px 12px">+</button>
+              <div id="arb-gol-visita" style="font-size:32px;font-weight:800;min-width:40px">0</div>
+              <button class="ch" onclick="sumarGol('visita',-1)" style="padding:6px 12px">−</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:20px;margin-bottom:20px">
+        <p style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Cargar tarjeta</p>
+        <select class="li" id="tarj-jugador"><option value="">— elegir jugador —</option></select>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="ch" onclick="cargarTarjeta('verde')" style="flex:1">🟢 Verde</button>
+          <button class="ch" onclick="cargarTarjeta('amarilla')" style="flex:1">🟨 Amarilla</button>
+          <button class="ch" onclick="cargarTarjeta('roja')" style="flex:1">🟥 Roja</button>
+        </div>
+        <div id="tarj-lista" style="margin-top:14px;font-size:12px;color:var(--text2)"></div>
+      </div>
+
+      <button class="cta-lime" style="width:100%;padding:14px" onclick="cerrarPartido()">Cerrar partido</button>
+    </div>
+  </div>
+</div>
+
+<div id="panel-admin" class="page">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px">
+      <div><div class="sec-lbl" style="margin:0">panel admin</div><div class="sec-title" style="font-size:22px">Hockey Kids League</div></div>
+      <button class="ch" onclick="logout()">Salir</button>
+    </div>
+
+    <div class="tabs2" style="flex-wrap:wrap">
+      <button class="tab2 sel" onclick="selAdminTab(this,'clubes')">Clubes</button>
+      <button class="tab2" onclick="selAdminTab(this,'equipos')">Equipos</button>
+      <button class="tab2" onclick="selAdminTab(this,'jugadores')">Jugadores</button>
+      <button class="tab2" onclick="selAdminTab(this,'torneos')">Torneos</button>
+      <button class="tab2" onclick="selAdminTab(this,'partidos')">Partidos</button>
+    </div>
+
+    <div id="admin-clubes" class="admin-view">
+      <div class="g2" style="margin-bottom:20px">
+        <input class="li" id="af-club-nombre" placeholder="Nombre del club">
+        <button class="btn-login-go" onclick="crearClub()">+ Crear club</button>
+      </div>
+      <div class="card"><div class="tabla-wrap"><table><thead><tr><th class="tl">nombre</th><th>creado</th></tr></thead><tbody id="clubes-tbody"></tbody></table></div></div>
+    </div>
+
+    <div id="admin-equipos" class="admin-view" style="display:none">
+      <div style="margin-bottom:20px">
+        <select class="li" id="af-eq-club"><option value="">— club —</option></select>
+        <input class="li" id="af-eq-nombre" placeholder="Nombre del equipo (ej: Los Rayos Azul)">
+        <select class="li" id="af-eq-cat"><option value="">— categoría —</option><option>Sub 6</option><option>Sub 8</option><option>Sub 10</option></select>
+        <input class="li" id="af-eq-serie" placeholder="Serie (ej: A)" value="A">
+        <button class="btn-login-go" onclick="crearEquipo()">+ Crear equipo</button>
+      </div>
+      <div class="card"><div class="tabla-wrap"><table><thead><tr><th class="tl">equipo</th><th class="tl">club</th><th>categoría</th><th>serie</th></tr></thead><tbody id="equipos-tbody"></tbody></table></div></div>
+    </div>
+
+    <div id="admin-jugadores" class="admin-view" style="display:none">
+      <div class="card"><div class="tabla-wrap"><table><thead><tr><th class="tl">nombre</th><th class="tl">equipo</th><th>categoría</th><th>tutor</th><th>habilitado</th></tr></thead><tbody id="admin-jugadores-tbody"></tbody></table></div></div>
+    </div>
+
+    <div id="admin-torneos" class="admin-view" style="display:none">
+      <div style="margin-bottom:20px">
+        <input class="li" id="af-torneo-nombre" placeholder="Nombre (ej: Apertura 2026)">
+        <select class="li" id="af-torneo-tipo"><option value="">— tipo —</option><option>Apertura</option><option>Clausura</option><option>Copa Campeones</option></select>
+        <button class="btn-login-go" onclick="crearTorneo()">+ Crear torneo</button>
+      </div>
+      <div class="card"><div class="tabla-wrap"><table><thead><tr><th class="tl">nombre</th><th>tipo</th><th>activo</th></tr></thead><tbody id="torneos-tbody"></tbody></table></div></div>
+    </div>
+
+    <div id="admin-partidos" class="admin-view" style="display:none">
+      <div style="margin-bottom:20px">
+        <select class="li" id="af-p-torneo"><option value="">— torneo —</option></select>
+        <select class="li" id="af-p-local"><option value="">— equipo local —</option></select>
+        <select class="li" id="af-p-visita"><option value="">— equipo visita —</option></select>
+        <div class="g2">
+          <input class="li" type="date" id="af-p-fecha">
+          <input class="li" type="time" id="af-p-hora">
+        </div>
+        <input class="li" id="af-p-cancha" placeholder="Cancha / sede">
+        <select class="li" id="af-p-arbitro"><option value="">— árbitro —</option></select>
+        <button class="btn-login-go" onclick="crearPartido()">+ Crear partido</button>
+      </div>
+      <div class="card"><div class="tabla-wrap"><table><thead><tr><th class="tl">partido</th><th>fecha</th><th>estado</th><th>resultado</th></tr></thead><tbody id="partidos-tbody"></tbody></table></div></div>
+    </div>
+  </div>
+</div>
+<!-- ==================== FIN PANELES ==================== -->
+
 <script>
 function goTo(id,btn,anchorId){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -680,7 +872,7 @@ function showLogin(role){
   document.getElementById('role-select').style.display='none';
   document.querySelectorAll('.login-form').forEach(f=>f.classList.remove('active'));
   document.getElementById('lf-'+role).classList.add('active');
-  document.getElementById('modal-title').textContent=role==='arb'?'Ingreso Juez':'Ingreso Equipo';
+  document.getElementById('modal-title').textContent = role==='arb'?'Ingreso Juez' : role==='admin'?'Ingreso Admin' : 'Ingreso Equipo';
 }
 function backToRoles(){
   document.getElementById('role-select').style.display='block';
@@ -688,25 +880,301 @@ function backToRoles(){
   document.getElementById('modal-title').textContent='¿Cómo querés ingresar?';
 }
 
-var TEAMS={RY:{pass:'somosinclusives',name:'Los Rayos'},PU:{pass:'pumas2026',name:'Los Pumas'}};
-var ARB={arbitro01:{pass:'hkl2026',nombre:'Jorge Silva'}};
-function loginEquipo(){
-  var eq=document.getElementById('eq-sel').value;
-  var p=document.getElementById('eq-pass').value;
-  var err=document.getElementById('err-eq');err.style.display='none';
-  if(eq&&TEAMS[eq]&&TEAMS[eq].pass===p){
-    closeModal();
-    alert('Login OK — '+TEAMS[eq].name+'. (Panel de equipo con campos de tutor/documento/carné pendiente de conectar en esta versión de mockup)');
-  } else { err.style.display='block' }
+if(location.hash==='#admin'){ setTimeout(function(){ openModal(); showLogin('admin'); },50); }
+</script>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+const supabase = createClient(
+  'https://ykgrrjnvkxpwcvagleqq.supabase.co',
+  'sb_publishable_P5KEpjSfChoGLCttRyDgdg_hqah0iMG'
+);
+window.supabase = supabase;
+window.CURRENT_USER = null; // {id, rol, nombre, equipo_id}
+
+function setBtnLoading(id,loading,label){
+  var b=document.getElementById(id);
+  if(!b)return;
+  b.disabled=loading;
+  b.textContent=loading?'Ingresando…':label;
 }
-function loginArbitro(){
-  var u=document.getElementById('arb-user').value.trim().toLowerCase();
-  var p=document.getElementById('arb-pass').value;
-  var err=document.getElementById('err-arb');err.style.display='none';
-  if(ARB[u]&&ARB[u].pass===p){
-    closeModal();
-    alert('Login OK — '+ARB[u].nombre+'. (Panel de árbitro con tarjetas verde/amarilla/roja pendiente de conectar en esta versión de mockup)');
-  } else { err.style.display='block' }
+
+window.loginEquipo = async function(){
+  var email=document.getElementById('eq-email').value.trim();
+  var pass=document.getElementById('eq-pass').value;
+  var err=document.getElementById('err-eq'); err.style.display='none';
+  if(!email||!pass){ err.textContent='Completá email y contraseña'; err.style.display='block'; return; }
+  setBtnLoading('eq-btn',true);
+  const {data,error} = await supabase.auth.signInWithPassword({email,password:pass});
+  if(error){ err.textContent='Email o contraseña incorrectos'; err.style.display='block'; setBtnLoading('eq-btn',false,'Ingresar →'); return; }
+  const perfil = await cargarPerfil(data.user.id);
+  setBtnLoading('eq-btn',false,'Ingresar →');
+  if(!perfil || perfil.rol!=='equipo'){ err.textContent='Esta cuenta no es de un equipo'; err.style.display='block'; await supabase.auth.signOut(); return; }
+  window.CURRENT_USER = perfil;
+  closeModal();
+  await abrirPanelEquipo();
+};
+
+window.loginArbitro = async function(){
+  var email=document.getElementById('arb-email').value.trim();
+  var pass=document.getElementById('arb-pass').value;
+  var err=document.getElementById('err-arb'); err.style.display='none';
+  if(!email||!pass){ err.textContent='Completá email y contraseña'; err.style.display='block'; return; }
+  setBtnLoading('arb-btn',true);
+  const {data,error} = await supabase.auth.signInWithPassword({email,password:pass});
+  if(error){ err.textContent='Email o contraseña incorrectos'; err.style.display='block'; setBtnLoading('arb-btn',false,'Ingresar →'); return; }
+  const perfil = await cargarPerfil(data.user.id);
+  setBtnLoading('arb-btn',false,'Ingresar →');
+  if(!perfil || perfil.rol!=='arbitro'){ err.textContent='Esta cuenta no es de un árbitro'; err.style.display='block'; await supabase.auth.signOut(); return; }
+  window.CURRENT_USER = perfil;
+  closeModal();
+  await abrirPanelArbitro();
+};
+
+window.loginAdmin = async function(){
+  var email=document.getElementById('admin-email').value.trim();
+  var pass=document.getElementById('admin-pass').value;
+  var err=document.getElementById('err-admin'); err.style.display='none';
+  if(!email||!pass){ err.textContent='Completá email y contraseña'; err.style.display='block'; return; }
+  setBtnLoading('admin-btn',true);
+  const {data,error} = await supabase.auth.signInWithPassword({email,password:pass});
+  if(error){ err.textContent='Email o contraseña incorrectos'; err.style.display='block'; setBtnLoading('admin-btn',false,'Ingresar →'); return; }
+  const perfil = await cargarPerfil(data.user.id);
+  setBtnLoading('admin-btn',false,'Ingresar →');
+  if(!perfil || perfil.rol!=='admin'){ err.textContent='Esta cuenta no es admin'; err.style.display='block'; await supabase.auth.signOut(); return; }
+  window.CURRENT_USER = perfil;
+  closeModal();
+  await abrirPanelAdmin();
+};
+
+async function cargarPerfil(uid){
+  const {data,error} = await supabase.from('perfiles').select('*').eq('id',uid).single();
+  if(error){ console.error(error); return null; }
+  return data;
+}
+
+window.logout = async function(){
+  await supabase.auth.signOut();
+  window.CURRENT_USER = null;
+  goTo('home',null);
+};
+
+/* ============ PANEL EQUIPO ============ */
+async function abrirPanelEquipo(){
+  goTo('panel-equipo',null);
+  const u = window.CURRENT_USER;
+  const {data:equipo} = await supabase.from('equipos').select('*, clubes(nombre)').eq('id',u.equipo_id).single();
+  document.getElementById('eq-nombre-header').textContent = equipo ? equipo.nombre+' · '+equipo.categoria : u.nombre;
+  await cargarJugadoresEquipo();
+  await cargarPartidosEquipo();
+}
+window.toggleJugadorForm = function(){
+  var f=document.getElementById('jugador-form');
+  f.style.display = f.style.display==='none' ? 'block' : 'none';
+};
+async function cargarJugadoresEquipo(){
+  const u = window.CURRENT_USER;
+  const tbody = document.getElementById('jugadores-tbody');
+  const {data,error} = await supabase.from('jugadores').select('*').eq('equipo_id',u.equipo_id).order('created_at',{ascending:false});
+  if(error || !data || data.length===0){ tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:20px">Todavía no cargaste jugadores</td></tr>'; return; }
+  tbody.innerHTML = data.map(j=>`<tr><td class="tl">${j.nombre} ${j.apellido}</td><td>${j.documento||'—'}</td><td>${j.categoria||'—'}</td><td>${j.tutor_nombre} · ${j.tutor_telefono}</td><td>${j.habilitado?'✅ Habilitado':'⏳ Pendiente'}</td></tr>`).join('');
+}
+window.guardarJugador = async function(){
+  const u = window.CURRENT_USER;
+  const err = document.getElementById('jf-error'); err.style.display='none';
+  const payload = {
+    equipo_id: u.equipo_id,
+    nombre: document.getElementById('jf-nombre').value.trim(),
+    apellido: document.getElementById('jf-apellido').value.trim(),
+    documento: document.getElementById('jf-documento').value.trim(),
+    fecha_nacimiento: document.getElementById('jf-fnac').value || null,
+    sociedad_medica: document.getElementById('jf-sociedad').value.trim(),
+    telefono_sociedad_medica: document.getElementById('jf-tel-sociedad').value.trim(),
+    tutor_nombre: document.getElementById('jf-tutor-nombre').value.trim(),
+    tutor_telefono: document.getElementById('jf-tutor-tel').value.trim(),
+    tutor_vinculo: document.getElementById('jf-tutor-vinculo').value
+  };
+  if(!payload.nombre||!payload.apellido||!payload.tutor_nombre||!payload.tutor_telefono||!payload.tutor_vinculo){
+    err.textContent='Completá nombre, apellido y los 3 datos del tutor (son obligatorios)';
+    err.style.display='block'; return;
+  }
+  const {error} = await supabase.from('jugadores').insert(payload);
+  if(error){ err.textContent='Error al guardar: '+error.message; err.style.display='block'; return; }
+  document.getElementById('jugador-form').style.display='none';
+  ['jf-nombre','jf-apellido','jf-documento','jf-fnac','jf-sociedad','jf-tel-sociedad','jf-tutor-nombre','jf-tutor-tel'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('jf-tutor-vinculo').value='';
+  await cargarJugadoresEquipo();
+};
+async function cargarPartidosEquipo(){
+  const u = window.CURRENT_USER;
+  const box = document.getElementById('eq-partidos-list');
+  const {data,error} = await supabase.from('partidos').select('*, local:equipo_local_id(nombre), visita:equipo_visita_id(nombre)').or(`equipo_local_id.eq.${u.equipo_id},equipo_visita_id.eq.${u.equipo_id}`).order('fecha',{ascending:true});
+  if(error || !data || data.length===0){ box.textContent='No hay partidos cargados todavía.'; return; }
+  box.innerHTML = data.map(p=>`<div style="padding:12px 0;border-bottom:1px solid var(--border)"><b>${p.local?.nombre||'?'}</b> vs <b>${p.visita?.nombre||'?'}</b><br><span style="color:var(--text3);font-size:12px">${p.fecha||''} ${p.hora||''} · ${p.cancha||''} · ${p.estado}</span></div>`).join('');
+}
+
+/* ============ PANEL ARBITRO ============ */
+var ARB_PARTIDO_ACTUAL = null;
+async function abrirPanelArbitro(){
+  goTo('panel-arbitro',null);
+  document.getElementById('arb-nombre-header').textContent = window.CURRENT_USER.nombre;
+  await cargarPartidosArbitro();
+}
+async function cargarPartidosArbitro(){
+  const u = window.CURRENT_USER;
+  const box = document.getElementById('arb-partidos-list');
+  const {data,error} = await supabase.from('partidos').select('*, local:equipo_local_id(nombre), visita:equipo_visita_id(nombre)').eq('arbitro_id',u.id).neq('estado','cerrado').order('fecha',{ascending:true});
+  if(error || !data || data.length===0){ box.textContent='No tenés partidos asignados pendientes.'; return; }
+  box.innerHTML = data.map(p=>`<div style="padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="abrirPartidoArbitro('${p.id}')"><b>${p.local?.nombre||'?'}</b> vs <b>${p.visita?.nombre||'?'}</b><br><span style="color:var(--text3);font-size:12px">${p.fecha||''} ${p.hora||''} · ${p.cancha||''} · ${p.estado}</span></div>`).join('');
+}
+window.abrirPartidoArbitro = async function(pid){
+  const {data:p} = await supabase.from('partidos').select('*, local:equipo_local_id(id,nombre), visita:equipo_visita_id(id,nombre)').eq('id',pid).single();
+  if(!p) return;
+  ARB_PARTIDO_ACTUAL = p;
+  document.getElementById('arb-lista-view').style.display='none';
+  document.getElementById('arb-partido-view').style.display='block';
+  document.getElementById('arb-partido-header').innerHTML = `<div style="font-size:13px;color:var(--text3)">${p.fecha||''} ${p.hora||''} · ${p.cancha||''}</div>`;
+  document.getElementById('arb-nombre-local').textContent = p.local?.nombre||'Local';
+  document.getElementById('arb-nombre-visita').textContent = p.visita?.nombre||'Visita';
+  document.getElementById('arb-gol-local').textContent = p.gol_local||0;
+  document.getElementById('arb-gol-visita').textContent = p.gol_visita||0;
+  if(p.estado==='precargado'){ await supabase.from('partidos').update({estado:'en_curso'}).eq('id',pid); }
+  await cargarJugadoresParaTarjetas(p);
+  await cargarTarjetasPartido(pid);
+};
+window.volverListaPartidos = function(){
+  document.getElementById('arb-lista-view').style.display='block';
+  document.getElementById('arb-partido-view').style.display='none';
+  cargarPartidosArbitro();
+};
+window.sumarGol = async function(lado,delta){
+  const p = ARB_PARTIDO_ACTUAL; if(!p) return;
+  const campo = lado==='local' ? 'gol_local' : 'gol_visita';
+  const actual = lado==='local' ? p.gol_local : p.gol_visita;
+  const nuevo = Math.max(0,(actual||0)+delta);
+  const upd = {}; upd[campo]=nuevo;
+  const {error} = await supabase.from('partidos').update(upd).eq('id',p.id);
+  if(!error){ p[campo]=nuevo; document.getElementById(lado==='local'?'arb-gol-local':'arb-gol-visita').textContent=nuevo; }
+};
+async function cargarJugadoresParaTarjetas(p){
+  const {data} = await supabase.from('jugadores').select('id,nombre,apellido').in('equipo_id',[p.equipo_local_id,p.equipo_visita_id]);
+  const sel = document.getElementById('tarj-jugador');
+  sel.innerHTML = '<option value="">— elegir jugador —</option>' + (data||[]).map(j=>`<option value="${j.id}">${j.nombre} ${j.apellido}</option>`).join('');
+}
+window.cargarTarjeta = async function(tipo){
+  const p = ARB_PARTIDO_ACTUAL; if(!p) return;
+  const jid = document.getElementById('tarj-jugador').value;
+  if(!jid){ alert('Elegí un jugador primero'); return; }
+  const {error} = await supabase.from('tarjetas').insert({partido_id:p.id, jugador_id:jid, tipo});
+  if(error){ alert('Error: '+error.message); return; }
+  await cargarTarjetasPartido(p.id);
+};
+async function cargarTarjetasPartido(pid){
+  const {data} = await supabase.from('tarjetas').select('tipo, jugadores(nombre,apellido)').eq('partido_id',pid).order('created_at',{ascending:false});
+  const box = document.getElementById('tarj-lista');
+  const iconos = {verde:'🟢',amarilla:'🟨',roja:'🟥'};
+  box.innerHTML = (data||[]).map(t=>`${iconos[t.tipo]} ${t.jugadores?.nombre||''} ${t.jugadores?.apellido||''}`).join('<br>') || 'Sin tarjetas cargadas';
+}
+window.cerrarPartido = async function(){
+  const p = ARB_PARTIDO_ACTUAL; if(!p) return;
+  if(!confirm('¿Cerrar el partido? Una vez cerrado no vas a poder modificar el resultado.')) return;
+  const {error} = await supabase.from('partidos').update({estado:'cerrado', cerrado_en:new Date().toISOString()}).eq('id',p.id);
+  if(error){ alert('Error: '+error.message); return; }
+  alert('Partido cerrado. Resultado final: '+document.getElementById('arb-gol-local').textContent+' - '+document.getElementById('arb-gol-visita').textContent);
+  window.volverListaPartidos();
+};
+
+/* ============ PANEL ADMIN ============ */
+async function abrirPanelAdmin(){
+  goTo('panel-admin',null);
+  await Promise.all([cargarClubes(), cargarEquipos(), cargarJugadoresAdmin(), cargarTorneos(), cargarPartidosAdmin(), cargarSelectsAdmin()]);
+}
+window.selAdminTab = function(btn,tab){
+  document.querySelectorAll('.tabs2 .tab2').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.querySelectorAll('.admin-view').forEach(v=>v.style.display='none');
+  document.getElementById('admin-'+tab).style.display='block';
+};
+async function cargarClubes(){
+  const {data} = await supabase.from('clubes').select('*').order('nombre');
+  document.getElementById('clubes-tbody').innerHTML = (data||[]).map(c=>`<tr><td class="tl">${c.nombre}</td><td>${c.created_at?c.created_at.slice(0,10):''}</td></tr>`).join('') || '<tr><td colspan="2" style="text-align:center;color:var(--text3);padding:16px">Sin clubes cargados</td></tr>';
+}
+window.crearClub = async function(){
+  const nombre = document.getElementById('af-club-nombre').value.trim();
+  if(!nombre) return;
+  const {error} = await supabase.from('clubes').insert({nombre});
+  if(error){ alert('Error: '+error.message); return; }
+  document.getElementById('af-club-nombre').value='';
+  await cargarClubes(); await cargarSelectsAdmin();
+};
+async function cargarEquipos(){
+  const {data} = await supabase.from('equipos').select('*, clubes(nombre)').order('nombre');
+  document.getElementById('equipos-tbody').innerHTML = (data||[]).map(e=>`<tr><td class="tl">${e.nombre}</td><td class="tl">${e.clubes?.nombre||'—'}</td><td>${e.categoria}</td><td>${e.serie||''}</td></tr>`).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:16px">Sin equipos cargados</td></tr>';
+}
+window.crearEquipo = async function(){
+  const payload = {
+    club_id: document.getElementById('af-eq-club').value,
+    nombre: document.getElementById('af-eq-nombre').value.trim(),
+    categoria: document.getElementById('af-eq-cat').value,
+    serie: document.getElementById('af-eq-serie').value.trim()||'A'
+  };
+  if(!payload.club_id||!payload.nombre||!payload.categoria){ alert('Completá club, nombre y categoría'); return; }
+  const {error} = await supabase.from('equipos').insert(payload);
+  if(error){ alert('Error: '+error.message); return; }
+  document.getElementById('af-eq-nombre').value='';
+  await cargarEquipos(); await cargarSelectsAdmin();
+};
+async function cargarJugadoresAdmin(){
+  const {data} = await supabase.from('jugadores').select('*, equipos(nombre)').order('created_at',{ascending:false});
+  document.getElementById('admin-jugadores-tbody').innerHTML = (data||[]).map(j=>`<tr><td class="tl">${j.nombre} ${j.apellido}</td><td class="tl">${j.equipos?.nombre||'—'}</td><td>${j.categoria||'—'}</td><td>${j.tutor_nombre||''}</td><td><a href="javascript:void(0)" onclick="toggleHabilitado('${j.id}',${!j.habilitado})" style="color:var(--lime)">${j.habilitado?'✅ Sí':'⏳ No'}</a></td></tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:16px">Sin jugadores cargados</td></tr>';
+}
+window.toggleHabilitado = async function(id,nuevoValor){
+  await supabase.from('jugadores').update({habilitado:nuevoValor}).eq('id',id);
+  await cargarJugadoresAdmin();
+};
+async function cargarTorneos(){
+  const {data} = await supabase.from('torneos').select('*').order('nombre');
+  document.getElementById('torneos-tbody').innerHTML = (data||[]).map(t=>`<tr><td class="tl">${t.nombre}</td><td>${t.tipo}</td><td>${t.activo?'✅':'—'}</td></tr>`).join('') || '<tr><td colspan="3" style="text-align:center;color:var(--text3);padding:16px">Sin torneos cargados</td></tr>';
+}
+window.crearTorneo = async function(){
+  const nombre=document.getElementById('af-torneo-nombre').value.trim();
+  const tipo=document.getElementById('af-torneo-tipo').value;
+  if(!nombre||!tipo){ alert('Completá nombre y tipo'); return; }
+  const {error} = await supabase.from('torneos').insert({nombre,tipo});
+  if(error){ alert('Error: '+error.message); return; }
+  document.getElementById('af-torneo-nombre').value='';
+  await cargarTorneos(); await cargarSelectsAdmin();
+};
+async function cargarPartidosAdmin(){
+  const {data} = await supabase.from('partidos').select('*, local:equipo_local_id(nombre), visita:equipo_visita_id(nombre)').order('fecha',{ascending:false});
+  document.getElementById('partidos-tbody').innerHTML = (data||[]).map(p=>`<tr><td class="tl">${p.local?.nombre||'?'} vs ${p.visita?.nombre||'?'}</td><td>${p.fecha||''}</td><td>${p.estado}</td><td>${p.estado!=='precargado'?(p.gol_local+' - '+p.gol_visita):'—'}</td></tr>`).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:16px">Sin partidos cargados</td></tr>';
+}
+window.crearPartido = async function(){
+  const payload = {
+    torneo_id: document.getElementById('af-p-torneo').value,
+    equipo_local_id: document.getElementById('af-p-local').value,
+    equipo_visita_id: document.getElementById('af-p-visita').value,
+    fecha: document.getElementById('af-p-fecha').value || null,
+    hora: document.getElementById('af-p-hora').value || null,
+    cancha: document.getElementById('af-p-cancha').value.trim(),
+    arbitro_id: document.getElementById('af-p-arbitro').value || null
+  };
+  if(!payload.torneo_id||!payload.equipo_local_id||!payload.equipo_visita_id){ alert('Completá torneo, equipo local y equipo visita'); return; }
+  const {error} = await supabase.from('partidos').insert(payload);
+  if(error){ alert('Error: '+error.message); return; }
+  await cargarPartidosAdmin();
+};
+async function cargarSelectsAdmin(){
+  const {data:clubes} = await supabase.from('clubes').select('id,nombre').order('nombre');
+  const {data:equipos} = await supabase.from('equipos').select('id,nombre').order('nombre');
+  const {data:torneos} = await supabase.from('torneos').select('id,nombre').order('nombre');
+  const {data:arbitros} = await supabase.from('arbitros').select('id,nombre').order('nombre');
+  const opt = (arr,label) => '<option value="">— '+label+' —</option>' + (arr||[]).map(x=>`<option value="${x.id}">${x.nombre}</option>`).join('');
+  document.getElementById('af-eq-club').innerHTML = opt(clubes,'club');
+  document.getElementById('af-p-torneo').innerHTML = opt(torneos,'torneo');
+  document.getElementById('af-p-local').innerHTML = opt(equipos,'equipo local');
+  document.getElementById('af-p-visita').innerHTML = opt(equipos,'equipo visita');
+  document.getElementById('af-p-arbitro').innerHTML = opt(arbitros,'árbitro');
 }
 </script>
 </body>
