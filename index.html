@@ -124,6 +124,12 @@ header{background:rgba(16,16,16,.96);backdrop-filter:blur(20px);position:sticky;
 .regl-summary h3:first-child{margin-top:0}
 .regl-summary p,.regl-summary li{font-size:13px;color:var(--text2);line-height:1.7}
 .regl-summary ul{margin-left:18px}
+.faq-accordion{border-bottom:1px solid var(--border);padding:14px 0}
+.faq-accordion summary{font-size:14px;font-weight:700;color:var(--text);cursor:pointer;list-style:none}
+.faq-accordion summary::-webkit-details-marker{display:none}
+.faq-accordion summary::before{content:'+ ';color:var(--lime);font-weight:800}
+.faq-accordion[open] summary::before{content:'– '}
+.faq-accordion p{margin-top:8px}
 .btn-download{background:var(--lime);color:#0a0a0a;border:none;border-radius:var(--rxs);padding:12px 22px;font-family:'Inter',sans-serif;font-size:13px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
 
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -250,21 +256,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
     </div>
     <nav class="main-nav">
       <div class="nav-item active" id="nav-liga">
-        <button onclick="toggleDrop('nav-liga')">La liga <span class="chev">▾</span></button>
-        <div class="dropdown">
-          <button onclick="goTo('liga',null,'s-que-es')">Qué es HKL</button>
-          <button onclick="goTo('liga',null,'s-por-que')">Por qué nace</button>
-          <button onclick="goTo('liga',null,'s-diferente')">Qué nos hace diferentes</button>
-          <button onclick="goTo('liga',null,'s-hockey5')">Hockey 5</button>
-          <button onclick="goTo('liga',null,'s-mixto')">Hockey mixto</button>
-          <button onclick="goTo('liga',null,'s-categorias')">Categorías</button>
-          <button onclick="goTo('liga',null,'s-temporada')">Cómo funciona la temporada</button>
-          <button onclick="goTo('liga',null,'s-torneos')">Apertura / Clausura / Copa</button>
-          <button onclick="goTo('liga',null,'s-comunidad')">Comunidad HKL</button>
-          <button onclick="goTo('liga',null,'s-parte')">¿Querés ser parte?</button>
-          <div class="sub-hd">— — —</div>
-          <button onclick="goTo('liga',null,'s-faq')">❓ Preguntas frecuentes</button>
-        </div>
+        <button onclick="goTo('liga',null)">La liga</button>
       </div>
       <div class="nav-item" id="nav-pos">
         <button onclick="toggleDrop('nav-pos')">Posiciones <span class="chev">▾</span></button>
@@ -314,9 +306,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
   <div class="container" style="padding-top:0">
     <div class="sec-lbl">últimos resultados</div>
     <div class="cats3">
-      <div class="cat-card" style="text-align:center"><span class="cat-tag">Sub 6</span><div class="cat-score">3 – 1</div></div>
-      <div class="cat-card" style="text-align:center"><span class="cat-tag">Sub 8</span><div class="cat-score">2 – 2</div></div>
-      <div class="cat-card" style="text-align:center"><span class="cat-tag">Sub 10</span><div class="cat-score">4 – 0</div></div>
+      <div class="cat-card" style="text-align:center"><span class="cat-tag">Sub 6</span><div style="font-size:12px;font-weight:600;margin:8px 0 4px">Los Rayos vs Las Furias</div><div class="cat-score">3 – 1</div></div>
+      <div class="cat-card" style="text-align:center"><span class="cat-tag">Sub 8</span><div style="font-size:12px;font-weight:600;margin:8px 0 4px">Los Pumas vs Las Tormentas</div><div class="cat-score">2 – 2</div></div>
+      <div class="cat-card" style="text-align:center"><span class="cat-tag">Sub 10</span><div style="font-size:12px;font-weight:600;margin:8px 0 4px">Las Volcánicas vs Los Rayos</div><div class="cat-score">4 – 0</div></div>
     </div>
     <span class="ver-todos" onclick="goTo('resultados',null)">Ver todos los resultados →</span>
   </div>
@@ -324,9 +316,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
   <div class="container" style="padding-top:0">
     <div class="sec-lbl">tabla de posiciones — top por categoría</div>
     <div class="cats3">
-      <div class="cat-card"><span class="cat-tag">Sub 6</span><div style="font-size:12px;margin:4px 0">1. Los Rayos</div><div style="font-size:12px;color:var(--text3)">2. Las Furias</div></div>
-      <div class="cat-card"><span class="cat-tag">Sub 8</span><div style="font-size:12px;margin:4px 0">1. Las Tormentas</div><div style="font-size:12px;color:var(--text3)">2. Los Rayos</div></div>
-      <div class="cat-card"><span class="cat-tag">Sub 10</span><div style="font-size:12px;margin:4px 0">1. Las Volcánicas</div><div style="font-size:12px;color:var(--text3)">2. Los Pumas</div></div>
+      <div class="cat-card"><span class="cat-tag">Sub 6</span><div style="font-size:12px;margin:4px 0;display:flex;justify-content:space-between"><span>1. Los Rayos</span><b>9 pts</b></div><div style="font-size:12px;color:var(--text3);display:flex;justify-content:space-between"><span>2. Las Furias</span><span>6 pts</span></div></div>
+      <div class="cat-card"><span class="cat-tag">Sub 8</span><div style="font-size:12px;margin:4px 0;display:flex;justify-content:space-between"><span>1. Las Tormentas</span><b>7 pts</b></div><div style="font-size:12px;color:var(--text3);display:flex;justify-content:space-between"><span>2. Los Rayos</span><span>6 pts</span></div></div>
+      <div class="cat-card"><span class="cat-tag">Sub 10</span><div style="font-size:12px;margin:4px 0;display:flex;justify-content:space-between"><span>1. Las Volcánicas</span><b>9 pts</b></div><div style="font-size:12px;color:var(--text3);display:flex;justify-content:space-between"><span>2. Los Pumas</span><span>6 pts</span></div></div>
     </div>
     <span class="ver-todos" onclick="goTo('posiciones',null)">Ver tabla completa →</span>
   </div>
@@ -349,67 +341,71 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
 <div id="liga" class="page">
   <div class="container">
 
-    <div id="s-que-es" class="sec-lbl">qué es hockey kids league</div>
-    <p class="sec-sub" style="max-width:680px">Hockey Kids League es una liga infantil de Hockey 5 creada para generar un espacio de competencia regular para niños y niñas desde las primeras etapas del hockey. Queremos que los más chicos tengan algo que muchas veces falta: un lugar donde jugar partidos de manera regular, conocer otros clubes, competir y disfrutar del hockey. Una propuesta pensada para crecer junto con ellos y acompañar su desarrollo deportivo.</p>
+    <div class="sec-lbl">la liga</div>
+    <div class="regl-summary">
 
-    <div id="s-por-que" class="sec-lbl" style="margin-top:36px">por qué nace HKL</div>
-    <p class="sec-sub" style="max-width:680px">La HKL nace de una necesidad concreta: crear más espacios de competencia para las categorías más chicas. En muchas etapas iniciales del hockey, los niños entrenan durante todo el año pero tienen pocas oportunidades de jugar partidos de manera regular. Queremos cambiar eso — generar continuidad, encuentros entre clubes y una experiencia competitiva que permita que los chicos aprendan jugando.</p>
+      <h3>Qué es Hockey Kids League</h3>
+      <p>Hockey Kids League es una liga infantil de Hockey 5 creada para generar un espacio de competencia regular para niños y niñas desde las primeras etapas del hockey. Queremos que los más chicos tengan algo que muchas veces falta: un lugar donde jugar partidos de manera regular, conocer otros clubes, competir y disfrutar del hockey. Una propuesta pensada para crecer junto con ellos y acompañar su desarrollo deportivo.</p>
 
-    <div id="s-diferente" class="sec-lbl" style="margin-top:36px">qué nos hace diferentes</div>
-    <p class="sec-sub" style="max-width:600px">Más que un partido. Una experiencia de liga. La HKL nace con una idea simple: que los niños quieran volver a jugar el sábado siguiente.</p>
-    <div class="cats3" style="grid-template-columns:repeat(3,1fr)">
-      <div class="cat-card"><div class="cat-match">Competencia</div><div class="cat-meta">Partidos, resultados, tablas y torneos adaptados a cada etapa.</div></div>
-      <div class="cat-card"><div class="cat-match">Hockey mixto</div><div class="cat-meta">Niños y niñas compartiendo cancha, equipos y experiencias.</div></div>
-      <div class="cat-card"><div class="cat-match">Todos los sábados</div><div class="cat-meta">Una fecha semanal que convierte el hockey en un hábito.</div></div>
+      <h3>Por qué nace HKL</h3>
+      <p>La HKL nace de una necesidad concreta: crear más espacios de competencia para las categorías más chicas. En muchas etapas iniciales del hockey, los niños entrenan durante todo el año pero tienen pocas oportunidades de jugar partidos de manera regular. Queremos cambiar eso — generar continuidad, encuentros entre clubes y una experiencia competitiva que permita que los chicos aprendan jugando.</p>
+
+      <h3>Qué nos hace diferentes</h3>
+      <p>Más que un partido. Una experiencia de liga. La HKL nace con una idea simple: que los niños quieran volver a jugar el sábado siguiente.</p>
+      <ul>
+        <li><b>Competencia</b> — partidos, resultados, tablas y torneos adaptados a cada etapa.</li>
+        <li><b>Hockey mixto</b> — niños y niñas compartiendo cancha, equipos y experiencias.</li>
+        <li><b>Todos los sábados</b> — una fecha semanal que convierte el hockey en un hábito.</li>
+        <li><b>Comunidad</b> — clubes, jugadores, entrenadores, árbitros y familias en una misma liga.</li>
+        <li><b>Desarrollo</b> — una competencia que acompaña el crecimiento y sube de nivel según la edad.</li>
+      </ul>
+
+      <h3>Hockey 5. Todos los sábados</h3>
+      <p>La HKL utiliza el formato 5 vs 5, una modalidad dinámica que permite mayor participación y más contacto con la bocha. Cada jornada reúne a clubes y categorías en una misma sede, creando una verdadera experiencia de día de hockey. Cambios ilimitados durante los partidos, fechas semanales todos los sábados, y cada categoría con su propia competencia y clasificación.</p>
+
+      <h3>Hockey mixto — un lugar para todos</h3>
+      <p>En la HKL creemos que el hockey es un deporte que tiene que tener lugar para todos. Por eso nuestras categorías son mixtas, permitiendo que niños y niñas compartan equipos, partidos y experiencias. El hockey del mañana se construye jugando hoy.</p>
+
+      <h3>Categorías</h3>
+      <p>El hockey empieza temprano — tres categorías que acompañan diferentes etapas del desarrollo.</p>
+      <ul>
+        <li>🟢 <b>Sub 6</b> — nacidos 2021–2022. La primera experiencia competitiva.</li>
+        <li>🔵 <b>Sub 8</b> — nacidos 2019–2020. Competencia más estructurada.</li>
+        <li>🟣 <b>Sub 10</b> — nacidos 2017–2018. Mayor desarrollo deportivo.</li>
+      </ul>
+
+      <h3>Cómo funciona la temporada</h3>
+      <p>La HKL tiene jornadas de competencia todos los sábados. Los equipos de cada categoría se distribuyen en series y juegan todos contra todos dentro de su serie. Un mismo club puede presentar más de un equipo dentro de una misma categoría — cada equipo compite de forma independiente y puede avanzar a los playoffs. Al finalizar la fase regular, los mejores equipos avanzan a playoffs y final.</p>
+
+      <h3>Una temporada. Dos torneos</h3>
+      <ul>
+        <li><b>Apertura</b> — Marzo → Julio. Series + fase regular + playoffs + final.</li>
+        <li><b>Clausura</b> — Agosto → Noviembre. Series + fase regular + playoffs + final.</li>
+        <li><b>Copa Campeones</b> — Diciembre. Campeón Apertura vs Campeón Clausura.</li>
+      </ul>
+
+      <h3>Una liga para toda la familia</h3>
+      <p>La HKL no termina cuando suena el silbato. Queremos construir una experiencia de la que formen parte jugadores, familias, clubes, entrenadores, árbitros y toda la comunidad del hockey. Un sábado de HKL es mucho más que un partido: es encontrarse, jugar, competir y disfrutar.</p>
     </div>
-    <div class="cats3" style="grid-template-columns:repeat(2,1fr);max-width:800px;margin-top:12px">
-      <div class="cat-card"><div class="cat-match">Comunidad</div><div class="cat-meta">Clubes, jugadores, entrenadores, árbitros y familias en una misma liga.</div></div>
-      <div class="cat-card"><div class="cat-match">Desarrollo</div><div class="cat-meta">Una competencia que acompaña el crecimiento y sube de nivel según la edad.</div></div>
-    </div>
 
-    <div id="s-hockey5" class="sec-lbl" style="margin-top:36px">hockey 5. todos los sábados</div>
-    <p class="sec-sub" style="max-width:680px">La HKL utiliza el formato 5 vs 5, una modalidad dinámica que permite mayor participación y más contacto con la bocha. Cada jornada reúne a clubes y categorías en una misma sede, creando una verdadera experiencia de día de hockey. Cambios ilimitados durante los partidos, fechas semanales todos los sábados, y cada categoría con su propia competencia y clasificación.</p>
-
-    <div id="s-mixto" class="sec-lbl" style="margin-top:36px">hockey mixto — un lugar para todos</div>
-    <p class="sec-sub" style="max-width:680px">En la HKL creemos que el hockey es un deporte que tiene que tener lugar para todos. Por eso nuestras categorías son mixtas, permitiendo que niños y niñas compartan equipos, partidos y experiencias. El hockey del mañana se construye jugando hoy.</p>
-
-    <div id="s-categorias" class="sec-lbl" style="margin-top:36px">categorías</div>
-    <p class="sec-sub" style="max-width:500px">El hockey empieza temprano — tres categorías que acompañan diferentes etapas del desarrollo.</p>
-    <div class="cats3">
-      <div class="cat-card"><span class="cat-tag">Sub 6</span><div class="cat-match">Nacidos 2021–2022</div><div class="cat-meta">La primera experiencia competitiva.</div></div>
-      <div class="cat-card"><span class="cat-tag">Sub 8</span><div class="cat-match">Nacidos 2019–2020</div><div class="cat-meta">Competencia más estructurada.</div></div>
-      <div class="cat-card"><span class="cat-tag">Sub 10</span><div class="cat-match">Nacidos 2017–2018</div><div class="cat-meta">Mayor desarrollo deportivo.</div></div>
-    </div>
-
-    <div id="s-temporada" class="sec-lbl" style="margin-top:36px">cómo funciona la temporada</div>
-    <p class="sec-sub" style="max-width:680px">La HKL tiene jornadas de competencia todos los sábados. Los equipos de cada categoría se distribuyen en series y juegan todos contra todos dentro de su serie. Un mismo club puede presentar más de un equipo dentro de una misma categoría — cada equipo compite de forma independiente y puede avanzar a los playoffs. Al finalizar la fase regular, los mejores equipos avanzan a playoffs y final.</p>
-
-    <div id="s-torneos" class="sec-lbl" style="margin-top:36px">una temporada. dos torneos</div>
-    <div class="cats3" style="grid-template-columns:repeat(3,1fr)">
-      <div class="cat-card"><div class="cat-match">Apertura</div><div class="cat-meta">Marzo → Julio<br>Series + fase regular + playoffs + final</div></div>
-      <div class="cat-card"><div class="cat-match">Clausura</div><div class="cat-meta">Agosto → Noviembre<br>Series + fase regular + playoffs + final</div></div>
-      <div class="cat-card"><div class="cat-match">Copa Campeones</div><div class="cat-meta">Diciembre<br>Campeón Apertura vs Campeón Clausura</div></div>
-    </div>
-
-    <div id="s-comunidad" class="sec-lbl" style="margin-top:36px">una liga para toda la familia</div>
-    <p class="sec-sub" style="max-width:680px">La HKL no termina cuando suena el silbato. Queremos construir una experiencia de la que formen parte jugadores, familias, clubes, entrenadores, árbitros y toda la comunidad del hockey. Un sábado de HKL es mucho más que un partido: es encontrarse, jugar, competir y disfrutar.</p>
-
-    <div id="s-parte" style="margin-top:56px;padding:32px;background:var(--lime-bg);border:1px solid rgba(0,230,118,.2);border-radius:var(--r);text-align:center">
+    <div style="margin-top:32px;padding:32px;background:var(--lime-bg);border:1px solid rgba(0,230,118,.2);border-radius:var(--r);text-align:center">
       <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:8px">¿Querés ser parte?</div>
       <p style="font-size:13px;color:var(--text2);margin-bottom:20px">El próximo sábado puede empezar algo nuevo — como club o como familia.</p>
       <button class="cta-lime" onclick="goTo('clubes',null)">Inscribirme →</button>
     </div>
 
-    <div id="s-faq" style="margin-top:56px;padding-top:32px;border-top:1px solid var(--border)">
+    <div style="margin-top:40px">
       <div class="sec-lbl">❓ preguntas frecuentes</div>
-      <div class="faq-item"><div class="faq-q">¿Qué es Hockey Kids League?</div><div class="faq-a">La HKL es una liga infantil de Hockey 5 pensada para que niños y niñas puedan jugar, competir y disfrutar del hockey desde edades tempranas.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Desde qué edad se puede jugar?</div><div class="faq-a">La HKL comienza con tres categorías: Sub-6, Sub-8 y Sub-10, determinadas según el año de nacimiento.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Las categorías son mixtas?</div><div class="faq-a">Sí. Todas las categorías de la HKL son mixtas, permitiendo que niños y niñas compartan equipos y partidos.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Cuándo se juega?</div><div class="faq-a">La HKL tiene jornadas de competencia todos los sábados durante la temporada deportiva.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Un club puede presentar más de un equipo?</div><div class="faq-a">Sí. Cada equipo se identifica de forma independiente y compite por separado durante el torneo.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Cómo se asignan los puntos?</div><div class="faq-a">Ganado: 3 puntos · Empatado: 1 punto · Perdido: 0 puntos.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Qué pasa si un jugador no está habilitado?</div><div class="faq-a">No podrá jugar ningún jugador que no haya sido correctamente inscripto y habilitado en la plataforma dentro de los plazos establecidos.</div></div>
-      <div class="faq-item" style="border-bottom:none"><div class="faq-q">¿Te quedó alguna pregunta?</div><div class="faq-a">📩 hola@hockeykidsleague.com.uy — te ayudamos con todo lo que necesites para formar parte de la HKL.</div></div>
+      <div class="regl-summary" style="padding:8px 24px">
+        <details class="faq-accordion"><summary>¿Qué es Hockey Kids League?</summary><p>La HKL es una liga infantil de Hockey 5 pensada para que niños y niñas puedan jugar, competir y disfrutar del hockey desde edades tempranas.</p></details>
+        <details class="faq-accordion"><summary>¿Desde qué edad se puede jugar?</summary><p>La HKL comienza con tres categorías: Sub-6, Sub-8 y Sub-10, determinadas según el año de nacimiento.</p></details>
+        <details class="faq-accordion"><summary>¿Las categorías son mixtas?</summary><p>Sí. Todas las categorías de la HKL son mixtas, permitiendo que niños y niñas compartan equipos y partidos.</p></details>
+        <details class="faq-accordion"><summary>¿Cuándo se juega?</summary><p>La HKL tiene jornadas de competencia todos los sábados durante la temporada deportiva.</p></details>
+        <details class="faq-accordion"><summary>¿Un club puede presentar más de un equipo?</summary><p>Sí. Cada equipo se identifica de forma independiente y compite por separado durante el torneo.</p></details>
+        <details class="faq-accordion"><summary>¿Cómo se asignan los puntos?</summary><p>Ganado: 3 puntos · Empatado: 1 punto · Perdido: 0 puntos.</p></details>
+        <details class="faq-accordion"><summary>¿Qué pasa si un jugador no está habilitado?</summary><p>No podrá jugar ningún jugador que no haya sido correctamente inscripto y habilitado en la plataforma dentro de los plazos establecidos.</p></details>
+        <details class="faq-accordion" style="border-bottom:none"><summary>¿Te quedó alguna pregunta?</summary><p>📩 hola@hockeykidsleague.com.uy — te ayudamos con todo lo que necesites para formar parte de la HKL.</p></details>
+      </div>
     </div>
 
   </div>
@@ -681,8 +677,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
         <option value="">— elegir —</option>
         <option>Madre</option><option>Padre</option><option>Tutor legal</option><option>Otro familiar</option>
       </select>
+      <label class="lf">Ficha médica (obligatorio · PNG o JPG)</label>
+      <input class="li" id="jf-ficha" type="file" accept="image/png,image/jpeg" style="padding:9px 13px">
+      <div id="jf-ficha-preview" style="display:none;margin:-4px 0 13px"><img id="jf-ficha-img" style="max-width:120px;border-radius:8px;border:1px solid var(--border2)"></div>
       <div class="error-msg" id="jf-error">Completá todos los campos obligatorios</div>
-      <button class="btn-login-go" onclick="guardarJugador()">Guardar jugador</button>
+      <button class="btn-login-go" id="jf-btn-guardar" onclick="guardarJugador()">Guardar jugador</button>
     </div>
 
     <div class="card"><div class="tabla-wrap">
@@ -743,7 +742,23 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 24p
         <div id="tarj-lista" style="margin-top:14px;font-size:12px;color:var(--text2)"></div>
       </div>
 
-      <button class="cta-lime" style="width:100%;padding:14px" onclick="cerrarPartido()">Cerrar partido</button>
+      <button class="cta-lime" id="btn-cerrar-partido" style="width:100%;padding:14px" onclick="pedirCierrePartido()">Cerrar partido</button>
+
+      <div id="confirm-cierre" style="display:none;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:20px;margin-top:14px;text-align:center">
+        <p style="font-size:14px;font-weight:700;margin-bottom:6px">¿Cerrar este partido?</p>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:16px">Una vez cerrado no vas a poder modificar el resultado ni las tarjetas.</p>
+        <div style="display:flex;gap:10px">
+          <button class="ch" style="flex:1" onclick="cancelarCierre()">Cancelar</button>
+          <button class="cta-lime" style="flex:1;padding:12px" onclick="confirmarCierre()">Sí, cerrar</button>
+        </div>
+      </div>
+
+      <div id="partido-cerrado-ok" style="display:none;background:var(--lime-bg);border:1px solid rgba(0,230,118,.3);border-radius:var(--r);padding:20px;margin-top:14px;text-align:center">
+        <p style="font-size:20px;margin-bottom:6px">✅</p>
+        <p style="font-size:14px;font-weight:700;color:var(--lime);margin-bottom:4px">Partido cerrado</p>
+        <p id="resultado-final-txt" style="font-size:13px;color:var(--text2);margin-bottom:16px"></p>
+        <button class="ch" onclick="volverListaPartidos()">Volver a mis partidos</button>
+      </div>
     </div>
   </div>
 </div>
@@ -892,7 +907,12 @@ function backToRoles(){
   document.getElementById('modal-title').textContent='¿Cómo querés ingresar?';
 }
 
-if(location.hash==='#admin'){ setTimeout(function(){ openModal(); showLogin('admin'); },50); }
+function checkAdminHash(){
+  if(location.hash==='#admin'){ openModal(); showLogin('admin'); }
+}
+window.addEventListener('load',function(){ setTimeout(checkAdminHash,100); });
+window.addEventListener('hashchange',checkAdminHash);
+checkAdminHash();
 </script>
 
 <script type="module">
@@ -991,9 +1011,18 @@ async function cargarJugadoresEquipo(){
   if(error || !data || data.length===0){ tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:20px">Todavía no cargaste jugadores</td></tr>'; return; }
   tbody.innerHTML = data.map(j=>`<tr><td class="tl">${j.nombre} ${j.apellido}</td><td>${j.documento||'—'}</td><td>${j.categoria||'—'}</td><td>${j.tutor_nombre} · ${j.tutor_telefono}</td><td>${j.habilitado?'✅ Habilitado':'⏳ Pendiente'}</td></tr>`).join('');
 }
+document.getElementById('jf-ficha')?.addEventListener('change', function(e){
+  const file = e.target.files[0];
+  const prev = document.getElementById('jf-ficha-preview');
+  const img = document.getElementById('jf-ficha-img');
+  if(!file){ prev.style.display='none'; return; }
+  img.src = URL.createObjectURL(file);
+  prev.style.display='block';
+});
 window.guardarJugador = async function(){
   const u = window.CURRENT_USER;
   const err = document.getElementById('jf-error'); err.style.display='none';
+  const fichaFile = document.getElementById('jf-ficha').files[0];
   const payload = {
     equipo_id: u.equipo_id,
     nombre: document.getElementById('jf-nombre').value.trim(),
@@ -1010,11 +1039,28 @@ window.guardarJugador = async function(){
     err.textContent='Completá nombre, apellido y los 3 datos del tutor (son obligatorios)';
     err.style.display='block'; return;
   }
+  if(!fichaFile){
+    err.textContent='La ficha médica (PNG o JPG) es obligatoria';
+    err.style.display='block'; return;
+  }
+  const btn = document.getElementById('jf-btn-guardar');
+  btn.disabled=true; btn.textContent='Guardando…';
+  const ext = fichaFile.name.split('.').pop();
+  const path = `${u.equipo_id}/${Date.now()}.${ext}`;
+  const {error:upErr} = await supabase.storage.from('fichas-medicas').upload(path, fichaFile);
+  if(upErr){
+    btn.disabled=false; btn.textContent='Guardar jugador';
+    err.textContent='Error al subir la ficha: '+upErr.message; err.style.display='block'; return;
+  }
+  const {data:urlData} = supabase.storage.from('fichas-medicas').getPublicUrl(path);
+  payload.ficha_medica_url = urlData.publicUrl;
   const {error} = await supabase.from('jugadores').insert(payload);
+  btn.disabled=false; btn.textContent='Guardar jugador';
   if(error){ err.textContent='Error al guardar: '+error.message; err.style.display='block'; return; }
   document.getElementById('jugador-form').style.display='none';
-  ['jf-nombre','jf-apellido','jf-documento','jf-fnac','jf-sociedad','jf-tel-sociedad','jf-tutor-nombre','jf-tutor-tel'].forEach(id=>document.getElementById(id).value='');
+  ['jf-nombre','jf-apellido','jf-documento','jf-fnac','jf-sociedad','jf-tel-sociedad','jf-tutor-nombre','jf-tutor-tel','jf-ficha'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('jf-tutor-vinculo').value='';
+  document.getElementById('jf-ficha-preview').style.display='none';
   await cargarJugadoresEquipo();
 };
 async function cargarPartidosEquipo(){
@@ -1045,12 +1091,20 @@ window.abrirPartidoArbitro = async function(pid){
   ARB_PARTIDO_ACTUAL = p;
   document.getElementById('arb-lista-view').style.display='none';
   document.getElementById('arb-partido-view').style.display='block';
+  document.getElementById('btn-cerrar-partido').style.display='block';
+  document.getElementById('confirm-cierre').style.display='none';
+  document.getElementById('partido-cerrado-ok').style.display='none';
   document.getElementById('arb-partido-header').innerHTML = `<div style="font-size:13px;color:var(--text3)">${p.fecha||''} ${p.hora||''} · ${p.cancha||''}</div>`;
   document.getElementById('arb-nombre-local').textContent = p.local?.nombre||'Local';
   document.getElementById('arb-nombre-visita').textContent = p.visita?.nombre||'Visita';
   document.getElementById('arb-gol-local').textContent = p.gol_local||0;
   document.getElementById('arb-gol-visita').textContent = p.gol_visita||0;
   if(p.estado==='precargado'){ await supabase.from('partidos').update({estado:'en_curso'}).eq('id',pid); }
+  if(p.estado==='cerrado'){
+    document.getElementById('btn-cerrar-partido').style.display='none';
+    document.getElementById('resultado-final-txt').textContent = 'Resultado final: '+(p.gol_local||0)+' - '+(p.gol_visita||0);
+    document.getElementById('partido-cerrado-ok').style.display='block';
+  }
   await cargarJugadoresParaTarjetas(p);
   await cargarTarjetasPartido(pid);
 };
@@ -1087,13 +1141,21 @@ async function cargarTarjetasPartido(pid){
   const iconos = {verde:'🟢',amarilla:'🟨',roja:'🟥'};
   box.innerHTML = (data||[]).map(t=>`${iconos[t.tipo]} ${t.jugadores?.nombre||''} ${t.jugadores?.apellido||''}`).join('<br>') || 'Sin tarjetas cargadas';
 }
-window.cerrarPartido = async function(){
+window.pedirCierrePartido = function(){
+  document.getElementById('btn-cerrar-partido').style.display='none';
+  document.getElementById('confirm-cierre').style.display='block';
+};
+window.cancelarCierre = function(){
+  document.getElementById('btn-cerrar-partido').style.display='block';
+  document.getElementById('confirm-cierre').style.display='none';
+};
+window.confirmarCierre = async function(){
   const p = ARB_PARTIDO_ACTUAL; if(!p) return;
-  if(!confirm('¿Cerrar el partido? Una vez cerrado no vas a poder modificar el resultado.')) return;
   const {error} = await supabase.from('partidos').update({estado:'cerrado', cerrado_en:new Date().toISOString()}).eq('id',p.id);
   if(error){ alert('Error: '+error.message); return; }
-  alert('Partido cerrado. Resultado final: '+document.getElementById('arb-gol-local').textContent+' - '+document.getElementById('arb-gol-visita').textContent);
-  window.volverListaPartidos();
+  document.getElementById('confirm-cierre').style.display='none';
+  document.getElementById('resultado-final-txt').textContent = 'Resultado final: '+document.getElementById('arb-gol-local').textContent+' - '+document.getElementById('arb-gol-visita').textContent;
+  document.getElementById('partido-cerrado-ok').style.display='block';
 };
 
 /* ============ PANEL ADMIN ============ */
